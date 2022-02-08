@@ -6,10 +6,14 @@ input.onButtonPressed(Button.A, function () {
     Malovani.Pohyb(x, y)
 })
 input.onPinPressed(TouchPin.P2, function () {
-    Malovani.Vymazat()
+    y += 0 - 1
+    if (y < 0) {
+        y = 4
+    }
+    Malovani.Pohyb(x, y)
 })
 input.onButtonPressed(Button.AB, function () {
-    Malovani.PrepnoutKurzor(0, 0)
+    Malovani.PrepnoutKurzor(x, y)
 })
 input.onButtonPressed(Button.B, function () {
     x += 1
@@ -18,13 +22,23 @@ input.onButtonPressed(Button.B, function () {
     }
     Malovani.Pohyb(x, y)
 })
-input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+input.onPinPressed(TouchPin.P1, function () {
     Malovani.Prekreslit()
+})
+input.onGesture(Gesture.Shake, function () {
+    Malovani.Vymazat()
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    y += 1
+    if (y > 4) {
+        y = 0
+    }
+    Malovani.Pohyb(x, y)
 })
 let x = 0
 let y = 0
-y = 1
-x = 3
+y = 0
+x = 0
 basic.forever(function () {
     Malovani.BlikaniKurzoru(x, y)
 })

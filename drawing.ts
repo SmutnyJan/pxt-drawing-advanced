@@ -23,7 +23,9 @@ namespace Malovani {
     //% block="Překreslit bod"
 
     export function Prekreslit(): void {
-        stateBeforeArrive = !(stateBeforeArrive)
+        if(showCursor) {
+            stateBeforeArrive = !(stateBeforeArrive)
+        }
     }
 
     /**
@@ -52,9 +54,9 @@ namespace Malovani {
     export function PrepnoutKurzor(newX: number, newY: number): void {
         showCursor = !(showCursor)
         if (stateBeforeArrive) {
-            led.plot(newX, newY)
+            led.plot(newX, 4 - newY)
         } else {
-            led.unplot(newX, newY)
+            led.unplot(newX, 4 - newY)
         }
     }
 
@@ -66,12 +68,12 @@ namespace Malovani {
     //% block="Blikat kurzorem na [%x, %y]"
 
     export function BlikaniKurzoru(newX: number, newY: number): void {
-        if (showCursor) {
-            led.toggle(newX, newY)
-            basic.pause(100)
-
             privateX = newX; //zde nastavuji při každém „bliknutí" hodnoty, protože se tato metoda provede jako první a já si někde musím získat výchozí hodnotu x a y před tím, než poprvné pohnu s kurzorem...nic lepšího mě nenapdalo
             privateY = newY; 
+        if (showCursor) {
+            led.toggle(newX, 4 - newY)
+            basic.pause(100)
+
         }
     }
 
@@ -82,16 +84,14 @@ namespace Malovani {
     */
     //% block="Pohyb na [%x, %y]"
     export function Pohyb(newX: number, newY: number): void {
-        if (showCursor) {
             if (stateBeforeArrive) {
-                led.plot(privateX, privateY)
+                led.plot(privateX, 4 - privateY)
             } else {
-                led.unplot(privateX, privateY)
+                led.unplot(privateX, 4 - privateY)
             }
             privateX = newX
             privateY = newY            
-            stateBeforeArrive = led.point(privateX, privateY)
-        }
+            stateBeforeArrive = led.point(privateX, 4 - privateY)
     }
 
 
