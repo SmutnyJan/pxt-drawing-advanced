@@ -1,12 +1,12 @@
 input.onButtonPressed(Button.A, function () {
-    x += 0 - 1
+    x += -1
     if (x < 0) {
         x = 4
     }
     Malovani.Pohyb(x, y)
 })
 input.onPinPressed(TouchPin.P2, function () {
-    y += 0 - 1
+    y += -1
     if (y < 0) {
         y = 4
     }
