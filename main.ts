@@ -13,7 +13,7 @@ input.onPinPressed(TouchPin.P2, function () {
     Malovani.pohyb(x, y)
 })
 input.onButtonPressed(Button.AB, function () {
-    Malovani.prepnoutKurzor(0, 0)
+    Malovani.prepnoutKurzor(x, y)
 })
 input.onButtonPressed(Button.B, function () {
     x += 1
@@ -40,5 +40,5 @@ let y = 0
 y = 0
 x = 0
 basic.forever(function () {
-    Malovani.blikaniKurzoru(0, 0)
+    Malovani.blikaniKurzoru(x, y)
 })

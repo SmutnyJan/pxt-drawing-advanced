@@ -7,13 +7,13 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#25E422 icon="\uf1fc"
+//% weight=100 color=#25E422 icon="\uf1fc" block="Malování"
 namespace Malovani {
-    let stateBeforeArrive = false
-    let showCursor = false
-    showCursor = true
-    let privateX = 0 
-    let privateY = 0
+    let predchoziStav = false
+    let jeVidetKurzor = false
+    jeVidetKurzor = true
+    let privatniX = 0 
+    let privatniY = 0
 
 
 
@@ -23,8 +23,8 @@ namespace Malovani {
     //% block="Překreslit bod"
 
     export function prekreslit(): void {
-        if(showCursor) {
-            stateBeforeArrive = !(stateBeforeArrive)
+        if (jeVidetKurzor) {
+            predchoziStav = !(predchoziStav)
         }
     }
 
@@ -41,37 +41,37 @@ namespace Malovani {
         . . . . .
         . . . . .
         `)
-        stateBeforeArrive = false
+        predchoziStav = false
     }
 
     /**
     * Přepne kurzor na zvolené souřadnici
-    * @newX x
-    * @newY y
+    * @noveX Zvolená souřadnice
+    * @noveY Zvolená souřadnice
     */
-    //% block="Přepne kurzor na [%x, %y]"
+    //% block="Přepne kurzor na [%noveX, %noveY]"
 
-    export function prepnoutKurzor(newX: number, newY: number): void {
-        showCursor = !(showCursor)
-        if (stateBeforeArrive) {
-            led.plot(newX, 4 - newY)
+    export function prepnoutKurzor(noveX: number, noveY: number): void {
+        jeVidetKurzor = !(jeVidetKurzor)
+        if (predchoziStav) {
+            led.plot(noveX, 4 - noveY)
         } else {
-            led.unplot(newX, 4 - newY)
+            led.unplot(noveX, 4 - noveY)
         }
     }
 
     /**
     * Blikne kurzorem na zvolené souřadnici
-    * @newX x
-    * @newY y
+    * @noveX Zvolená souřadnice
+    * @noveY Zvolená souřadnice
     */
-    //% block="Blikat kurzorem na [%x, %y]"
+    //% block="Blikat kurzorem na [%noveX, %noveY]"
 
-    export function blikaniKurzoru(newX: number, newY: number): void {
-            privateX = newX; //zde nastavuji při každém „bliknutí" hodnoty, protože se tato metoda provede jako první a já si někde musím získat výchozí hodnotu x a y před tím, než poprvné pohnu s kurzorem...nic lepšího mě nenapdalo
-            privateY = newY; 
-        if (showCursor) {
-            led.toggle(newX, 4 - newY)
+    export function blikaniKurzoru(noveX: number, noveY: number): void {
+        privatniX = noveX;
+        privatniY = noveY;
+        if (jeVidetKurzor) {
+            led.toggle(noveX, 4 - noveY)
             basic.pause(100)
 
         }
@@ -79,19 +79,20 @@ namespace Malovani {
 
     /**
     * Pohne kurzorem na zvolené souřadnice
-    * @newX x
-    * @newY y
+    * @noveX Zvolená souřadnice
+    * @noveY Zvolená souřadnice
     */
-    //% block="Pohyb na [%x, %y]"
-    export function pohyb(newX: number, newY: number): void {
-            if (stateBeforeArrive) {
-                led.plot(privateX, 4 - privateY)
+    //% block="Pohyb na [%noveX, %noveY]"
+    export function pohyb(noveX: number, noveY: number): void {
+        serial.writeLine("sdf")
+        if (predchoziStav) {
+            led.plot(privatniX, 4 - privatniY)
             } else {
-                led.unplot(privateX, 4 - privateY)
+            led.unplot(privatniX, 4 - privatniY)
             }
-            privateX = newX
-            privateY = newY            
-            stateBeforeArrive = led.point(privateX, 4 - privateY)
+        privatniX = noveX
+        privatniY = noveY
+        predchoziStav = led.point(privatniX, 4 - privatniY)
     }
 
 
