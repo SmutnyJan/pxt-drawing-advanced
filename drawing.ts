@@ -75,7 +75,6 @@ namespace Malovani {
     */
     //% block="Pohyb na [%noveX, %noveY]"
     export function pohyb(noveX: number, noveY: number): void {
-        serial.writeLine("sdf")
         if (predchoziStav) {
             led.plot(privatniX, 4 - privatniY)
             } else {
