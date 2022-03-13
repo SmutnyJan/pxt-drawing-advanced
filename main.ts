@@ -6,9 +6,9 @@ input.onButtonPressed(Button.A, function () {
     Malovani.pohyb(x, y)
 })
 input.onPinPressed(TouchPin.P2, function () {
-    y += -1
-    if (y < 0) {
-        y = 4
+    y += 1
+    if (y > 4) {
+        y = 0
     }
     Malovani.pohyb(x, y)
 })
@@ -29,9 +29,9 @@ input.onGesture(Gesture.Shake, function () {
     Malovani.vymazat()
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    y += 1
-    if (y > 4) {
-        y = 0
+    y += -1
+    if (y < 0) {
+        y = 4
     }
     Malovani.pohyb(x, y)
 })

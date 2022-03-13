@@ -45,9 +45,9 @@ namespace Malovani {
     export function prepnoutKurzor(noveX: number, noveY: number): void {
         jeVidetKurzor = !(jeVidetKurzor)
         if (predchoziStav) {
-            led.plot(noveX, 4 - noveY)
+            led.plot(noveX, noveY)
         } else {
-            led.unplot(noveX, 4 - noveY)
+            led.unplot(noveX, noveY)
         }
     }
 
@@ -62,7 +62,7 @@ namespace Malovani {
         privatniX = noveX;
         privatniY = noveY;
         if (jeVidetKurzor) {
-            led.toggle(noveX, 4 - noveY)
+            led.toggle(noveX, noveY)
             basic.pause(100)
 
         }
@@ -76,13 +76,13 @@ namespace Malovani {
     //% block="Pohyb na [%noveX, %noveY]"
     export function pohyb(noveX: number, noveY: number): void {
         if (predchoziStav) {
-            led.plot(privatniX, 4 - privatniY)
+            led.plot(privatniX, privatniY)
             } else {
-            led.unplot(privatniX, 4 - privatniY)
+            led.unplot(privatniX, privatniY)
             }
         privatniX = noveX
         privatniY = noveY
-        predchoziStav = led.point(privatniX, 4 - privatniY)
+        predchoziStav = led.point(privatniX, privatniY)
     }
 
 
