@@ -1,21 +1,21 @@
 //% weight=100 color=#25E422 icon="\uf1fc" block="Malování"
-namespace Malovani {
-    let predchoziStav = false
-    let jeVidetKurzor = false
-    jeVidetKurzor = true
-    let privatniX = 0 
-    let privatniY = 0
+namespace drawing {
+    let previousState = false
+    let isCursorVisible = false
+    isCursorVisible = true
+    let privateX = 0 
+    let privateY = 0
 
 
 
     /**
-        * Překreslí aktuální bod
-        */
+    * Překreslí aktuální bod
+    */
     //% block="Překreslit bod"
 
-    export function prekreslit(): void {
-        if (jeVidetKurzor) {
-            predchoziStav = !(predchoziStav)
+    export function redraw(): void {
+        if (isCursorVisible) {
+            previousState = !(previousState)
         }
     }
 
@@ -24,7 +24,7 @@ namespace Malovani {
     */
     //% block="Vymazat kresbu"
 
-    export function vymazat(): void {
+    export function clear(): void {
         basic.showLeds(`
         . . . . .
         . . . . .
@@ -32,37 +32,37 @@ namespace Malovani {
         . . . . .
         . . . . .
         `)
-        predchoziStav = false
+        previousState = false
     }
 
     /**
     * Přepne kurzor na zvolené souřadnici
-    * @noveX Zvolená souřadnice
-    * @noveY Zvolená souřadnice
+    * @newX Zvolená souřadnice
+    * @newY Zvolená souřadnice
     */
-    //% block="Přepne kurzor na [%noveX, %noveY]"
+    //% block="Přepne kurzor na [%newX, %newY]"
 
-    export function prepnoutKurzor(noveX: number, noveY: number): void {
-        jeVidetKurzor = !(jeVidetKurzor)
-        if (predchoziStav) {
-            led.plot(noveX, noveY)
+    export function toogleCursor(newX: number, newY: number): void {
+        isCursorVisible = !(isCursorVisible)
+        if (previousState) {
+            led.plot(newX, newY)
         } else {
-            led.unplot(noveX, noveY)
+            led.unplot(newX, newY)
         }
     }
 
     /**
     * Blikne kurzorem na zvolené souřadnici
-    * @noveX Zvolená souřadnice
-    * @noveY Zvolená souřadnice
+    * @newX Zvolená souřadnice
+    * @newY Zvolená souřadnice
     */
-    //% block="Blikat kurzorem na [%noveX, %noveY]"
+    //% block="Blikat kurzorem na [%newX, %newY]"
 
-    export function blikaniKurzoru(noveX: number, noveY: number): void {
-        privatniX = noveX;
-        privatniY = noveY;
-        if (jeVidetKurzor) {
-            led.toggle(noveX, noveY)
+    export function blinkCursor(newX: number, newY: number): void {
+        privateX = newX;
+        privateY = newY;
+        if (isCursorVisible) {
+            led.toggle(newX, newY)
             basic.pause(100)
 
         }
@@ -70,19 +70,19 @@ namespace Malovani {
 
     /**
     * Pohne kurzorem na zvolené souřadnice
-    * @noveX Zvolená souřadnice
-    * @noveY Zvolená souřadnice
+    * @newX Zvolená souřadnice
+    * @newY Zvolená souřadnice
     */
-    //% block="Pohyb na [%noveX, %noveY]"
-    export function pohyb(noveX: number, noveY: number): void {
-        if (predchoziStav) {
-            led.plot(privatniX, privatniY)
+    //% block="Pohyb na [%newX, %newY]"
+    export function moveAt(newX: number, newY: number): void {
+        if (previousState) {
+            led.plot(privateX, privateY)
             } else {
-            led.unplot(privatniX, privatniY)
+            led.unplot(privateX, privateY)
             }
-        privatniX = noveX
-        privatniY = noveY
-        predchoziStav = led.point(privatniX, privatniY)
+        privateX = newX
+        privateY = newY
+        previousState = led.point(privateX, privateY)
     }
 
 
