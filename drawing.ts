@@ -85,6 +85,4 @@ namespace drawing {
         previousState = led.point(privateX, privateY)
     }
 
-
-
 }
